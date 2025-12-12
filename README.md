@@ -7,22 +7,17 @@
 
 <style>
 :root {
-  --bg-body:#f8fafc;
-  --bg-card:#ffffff;
+  --bg:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e5e7eb;
   --primary:#6366f1;
   --primary-soft:#eef2ff;
-  --text-main:#0f172a;
-  --text-muted:#64748b;
-  --border:#e5e7eb;
-  --radius:18px;
-  --shadow:0 6px 20px rgba(15,23,42,.08);
 
-  --for-bg:#ecfdf3;
-  --for-border:#22c55e;
-  --against-bg:#fef2f2;
-  --against-border:#ef4444;
-  --unsure-bg:#f1f5f9;
-  --unsure-border:#94a3b8;
+  --badge-upcoming:#fef3c7;
+  --badge-passed:#dcfce7;
+  --badge-failed:#fee2e2;
+  --badge-committee:#e0e7ff;
 }
 
 * { box-sizing:border-box; }
@@ -30,235 +25,193 @@
 body {
   margin:0;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  background:var(--bg-body);
-  color:var(--text-main);
+  background:var(--bg);
+  color:var(--text);
 }
 
+/* HEADER */
 header {
   position:sticky;
   top:0;
-  background:var(--bg-card);
+  background:#fff;
   border-bottom:1px solid var(--border);
-  padding:14px 16px;
+  padding:12px 16px;
   font-weight:700;
   z-index:10;
 }
 
-.tabs {
-  display:flex;
-  gap:10px;
-  margin:12px 0 16px;
-  position:sticky;
-  top:56px;
-  background:var(--bg-body);
-  padding:8px 0;
-  z-index:9;
-}
-
-.tab {
-  padding:8px 16px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:var(--bg-card);
-  font-size:.8rem;
-  cursor:pointer;
-  min-height:44px;
-}
-
-.tab.active {
-  background:var(--primary-soft);
-  color:var(--primary);
-  border-color:transparent;
-}
-
-.view { display:none; }
-.view.active { display:block; }
-
-.filters {
-  margin:12px 0 16px;
-}
-
-.filter-title {
-  font-size:.7rem;
-  text-transform:uppercase;
-  color:var(--text-muted);
-  margin-bottom:6px;
-}
-
-.filter-row {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.filter {
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  font-size:.75rem;
-  cursor:pointer;
-  background:var(--bg-card);
-  min-height:44px;
-}
-
-.filter.active {
-  background:var(--primary-soft);
-  color:var(--primary);
-  border-color:transparent;
-  box-shadow:0 0 0 2px rgba(99,102,241,.15);
-}
-
+/* FEED */
 main {
-  max-width:640px;
+  max-width:620px;
   margin:auto;
-  padding:14px 14px calc(80px + env(safe-area-inset-bottom));
 }
 
-.card {
-  background:var(--bg-card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
-  margin-bottom:16px;
+/* FEED ITEM */
+.item {
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
 }
 
-.card h3 {
-  margin:0;
-  font-size:1.05rem;
+.item:hover {
+  background:#f8fafc;
 }
 
+/* HEADER ROW */
+.item-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.item-title {
+  font-weight:600;
+  font-size:.95rem;
+}
+
+.item-meta {
+  font-size:.75rem;
+  color:var(--muted);
+  white-space:nowrap;
+}
+
+/* BADGES */
+.badge {
+  font-size:.7rem;
+  padding:4px 8px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+.upcoming { background:var(--badge-upcoming); }
+.passed { background:var(--badge-passed); }
+.failed { background:var(--badge-failed); }
+.committee { background:var(--badge-committee); }
+
+/* TAGS */
 .tags {
   display:flex;
   gap:6px;
-  margin:6px 0 4px;
   flex-wrap:wrap;
+  margin:6px 0;
 }
 
 .tag {
   font-size:.7rem;
-  padding:4px 10px;
+  padding:2px 8px;
   border-radius:999px;
   background:var(--primary-soft);
   color:var(--primary);
   font-weight:600;
 }
 
-.meta {
+/* SUMMARY */
+.item-summary {
+  font-size:.9rem;
+  margin:6px 0 8px;
+}
+
+/* SENTIMENT */
+.sentiment {
   font-size:.75rem;
-  color:var(--text-muted);
-}
-
-.summary {
-  font-size:.92rem;
-  margin:10px 0;
-}
-
-.why-block {
-  background:var(--primary-soft);
-  border-radius:14px;
-  padding:12px 14px;
-}
-
-.why-title {
-  font-size:.72rem;
-  font-weight:600;
-  text-transform:uppercase;
-  color:var(--primary);
-}
-
-.why-points {
-  padding-left:18px;
-  font-size:.85rem;
-}
-
-.emphasis {
-  font-weight:600;
-  color:var(--primary);
-}
-
-.you-block {
-  border-left:3px solid var(--primary);
-  padding-left:12px;
-  margin:12px 0;
-  font-size:.88rem;
-}
-
-.analyst-note {
-  margin-top:12px;
-  padding:12px 14px;
-  border-radius:14px;
-  background:#f8fafc;
-  border:1px solid var(--border);
-  font-size:.85rem;
-}
-
-.analyst-header {
-  font-size:.72rem;
-  font-weight:600;
-  text-transform:uppercase;
-  color:var(--text-muted);
+  color:var(--muted);
   margin-bottom:6px;
 }
 
-.verified {
-  color:#16a34a;
-  font-weight:600;
+/* DETAILS */
+.details {
+  display:none;
+  margin-top:10px;
+  padding:12px 14px;
+  background:var(--primary-soft);
+  border-radius:14px;
 }
 
-.card-links {
+.details-title {
+  font-size:.7rem;
+  font-weight:700;
+  text-transform:uppercase;
+  color:var(--primary);
+  margin-bottom:6px;
+}
+
+.details ul {
+  padding-left:18px;
+  margin:0 0 10px;
+  font-size:.85rem;
+}
+
+.you {
+  font-size:.85rem;
+  border-left:3px solid var(--primary);
+  padding-left:10px;
+  margin-bottom:10px;
+}
+
+/* ANALYST */
+.analyst {
+  font-size:.8rem;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+  padding-top:8px;
+}
+
+/* ACTIONS */
+.actions {
   display:flex;
   justify-content:space-between;
-  font-size:.75rem;
+  align-items:center;
   margin-top:10px;
 }
 
-.card-links a {
+.actions-left {
+  display:flex;
+  gap:10px;
+}
+
+button {
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:.8rem;
+  color:var(--muted);
+}
+
+button.primary {
   color:var(--primary);
-  text-decoration:none;
   font-weight:600;
 }
 
+/* STANCE BUTTONS */
 .stance {
   display:flex;
   gap:10px;
-  margin-top:12px;
+  margin-top:8px;
 }
 
 .stance button {
-  flex:1;
-  padding:9px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:var(--bg-card);
-  font-size:.75rem;
-  cursor:pointer;
-  min-height:44px;
-  transition:transform .08s ease;
-}
-
-.stance button:active {
-  transform:scale(0.97);
-}
-
-.for.active { background:var(--for-bg); border-color:var(--for-border); }
-.against.active { background:var(--against-bg); border-color:var(--against-border); }
-.unsure.active { background:var(--unsure-bg); border-color:var(--unsure-border); }
-
-.topic-bubble {
   padding:6px 12px;
   border-radius:999px;
-  background:var(--primary-soft);
-  color:var(--primary);
-  font-size:.75rem;
-  display:inline-block;
-  margin:4px 6px 10px 0;
+  border:1px solid var(--border);
+  background:#fff;
 }
 
+.stance button.active {
+  background:var(--primary-soft);
+  color:var(--primary);
+  font-weight:600;
+}
+
+/* SOURCE */
+.source {
+  font-size:.75rem;
+  color:var(--primary);
+  text-decoration:none;
+}
+
+/* MOBILE */
 @media (max-width:480px){
-  .card { padding:16px; }
-  .summary { font-size:.95rem; }
-  .why-points { font-size:.9rem; }
-  .you-block { font-size:.9rem; }
+  .item-summary { font-size:.95rem; }
 }
 </style>
 </head>
@@ -268,203 +221,132 @@ main {
 
 <main>
 
-<div class="tabs">
-  <div class="tab active" onclick="switchView('feed',this)">📰 Your feed</div>
-  <div class="tab" onclick="switchView('stances',this)">📌 My stances</div>
+<!-- ITEM -->
+<div class="item">
+  <div class="item-header">
+    <div class="item-title">Zoning near light rail stations</div>
+    <div class="badge upcoming">Upcoming vote</div>
+  </div>
+
+  <div class="item-meta">Jan 14 · City Council</div>
+
+  <div class="tags">
+    <span class="tag">Housing</span>
+    <span class="tag">Capitol Hill</span>
+    <span class="tag">Downtown</span>
+  </div>
+
+  <div class="item-summary">
+    Allows more housing near light rail stations by reducing parking requirements.
+  </div>
+
+  <div class="sentiment">
+    Community reactions so far: <strong>Mixed</strong>
+  </div>
+
+  <div class="details">
+    <div class="details-title">Why this matters</div>
+    <ul>
+      <li>Increases housing supply near transit</li>
+      <li>Reduces parking minimums</li>
+    </ul>
+
+    <div class="details-title">Why this matters to you</div>
+    <div class="you">
+      If you rent or live near transit, availability and pricing could change.
+    </div>
+
+    <div class="analyst">
+      Civic analyst note · ✓ Verified  
+      <br>
+      Applies only within ¼ mile of stations and does not change height limits.
+    </div>
+
+    <div class="stance">
+      <button onclick="setStance(this)">👍 For</button>
+      <button onclick="setStance(this)">👎 Against</button>
+      <button onclick="setStance(this)">🤔 Not sure</button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="actions-left">
+      <button class="primary" onclick="toggleDetails(this)">ℹ️ Details</button>
+    </div>
+    <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
+  </div>
 </div>
 
-<div class="filters">
-  <div class="filter-title">Neighborhoods</div>
-  <div class="filter-row" id="neighborhoodFilters"></div>
-</div>
+<!-- ITEM -->
+<div class="item">
+  <div class="item-header">
+    <div class="item-title">Bus lane expansion downtown</div>
+    <div class="badge committee">In committee</div>
+  </div>
 
-<div id="feedView" class="view active"></div>
+  <div class="item-meta">Jan 18 · Transportation</div>
 
-<div id="stancesView" class="view">
-  <div id="stanceSummary"></div>
-  <div id="stanceCards"></div>
+  <div class="tags">
+    <span class="tag">Transit</span>
+    <span class="tag">Downtown</span>
+  </div>
+
+  <div class="item-summary">
+    Adds dedicated bus lanes downtown to improve reliability.
+  </div>
+
+  <div class="sentiment">
+    Community reactions so far: <strong>Leaning for</strong>
+  </div>
+
+  <div class="details">
+    <div class="details-title">Why this matters</div>
+    <ul>
+      <li>Improves bus reliability</li>
+      <li>Reduces congestion</li>
+    </ul>
+
+    <div class="details-title">Why this matters to you</div>
+    <div class="you">
+      Your commute time may decrease during peak hours.
+    </div>
+
+    <div class="analyst">
+      Civic analyst note · ✓ Verified  
+      <br>
+      Limited to corridors identified in the transit plan.
+    </div>
+
+    <div class="stance">
+      <button onclick="setStance(this)">👍 For</button>
+      <button onclick="setStance(this)">👎 Against</button>
+      <button onclick="setStance(this)">🤔 Not sure</button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="actions-left">
+      <button class="primary" onclick="toggleDetails(this)">ℹ️ Details</button>
+    </div>
+    <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
+  </div>
 </div>
 
 </main>
 
 <script>
-const neighborhoods = ['All','Capitol Hill','Ballard','Fremont','Downtown','Rainier Valley'];
-let activeNeighborhood = 'All';
-
-const items = [
-  {
-    id:1,
-    topic:'housing',
-    neighborhoods:['Capitol Hill','Downtown'],
-    title:'Zoning near light rail stations',
-    when:'Vote Jan 14',
-    summary:'Allows more housing near transit.',
-    why:[
-      '<span class="emphasis">Increases</span> housing supply',
-      '<span class="emphasis">Reduces</span> parking requirements'
-    ],
-    you:'If you rent or live near transit, this may affect availability.',
-    analyst:'Applies only within 1/4 mile of stations and does not change height limits.'
-  },
-  {
-    id:2,
-    topic:'transit',
-    neighborhoods:['Downtown','Fremont'],
-    title:'Bus lane expansion downtown',
-    when:'Committee Jan 18',
-    summary:'Adds dedicated bus lanes.',
-    why:[
-      '<span class="emphasis">Improves</span> bus reliability',
-      '<span class="emphasis">Reduces</span> congestion'
-    ],
-    you:'This may shorten your commute.',
-    analyst:'Limited to corridors identified in the transit plan.'
-  },
-  {
-    id:3,
-    topic:'budget',
-    neighborhoods:['All'],
-    title:'Mid-year budget adjustment',
-    when:'Finance Committee Jan 21',
-    summary:'Reallocates funding across departments.',
-    why:[
-      '<span class="emphasis">Shifts</span> funding priorities',
-      '<span class="emphasis">Affects</span> department resources'
-    ],
-    you:'Services you rely on may see changes.',
-    analyst:'No net increase to the city budget; funds are reallocated internally.'
-  },
-  {
-    id:4,
-    topic:'safety',
-    neighborhoods:['Ballard','Rainier Valley'],
-    title:'Neighborhood traffic calming',
-    when:'Vote Jan 23',
-    summary:'Adds speed humps and crosswalks.',
-    why:[
-      '<span class="emphasis">Improves</span> pedestrian safety',
-      '<span class="emphasis">Slows</span> vehicle speeds'
-    ],
-    you:'Walking or biking in these areas may feel safer.',
-    analyst:'Measures target streets with repeated speeding complaints.'
-  },
-  {
-    id:5,
-    topic:'environment',
-    neighborhoods:['Fremont','Capitol Hill'],
-    title:'Urban tree canopy expansion',
-    when:'Committee Jan 25',
-    summary:'Funds new tree planting in dense neighborhoods.',
-    why:[
-      '<span class="emphasis">Reduces</span> urban heat',
-      '<span class="emphasis">Improves</span> air quality'
-    ],
-    you:'More shade and cleaner air in your neighborhood.',
-    analyst:'Focuses on areas with below-average tree coverage.'
-  }
-];
-
-let stances = JSON.parse(localStorage.getItem('polocity_stances') || '{}');
-
-function switchView(view, el){
-  document.getElementById('feedView').classList.toggle('active', view==='feed');
-  document.getElementById('stancesView').classList.toggle('active', view==='stances');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
+function toggleDetails(btn){
+  const item = btn.closest('.item');
+  const details = item.querySelector('.details');
+  details.style.display = details.style.display === 'block' ? 'none' : 'block';
 }
 
-function setStance(id, stance){
-  stances[id] = stance;
-  localStorage.setItem('polocity_stances', JSON.stringify(stances));
-
-  const toast = document.createElement('div');
-  toast.innerText = 'Saved';
-  toast.style.position='fixed';
-  toast.style.bottom='20px';
-  toast.style.left='50%';
-  toast.style.transform='translateX(-50%)';
-  toast.style.background='#0f172a';
-  toast.style.color='#fff';
-  toast.style.padding='6px 12px';
-  toast.style.borderRadius='999px';
-  toast.style.fontSize='.75rem';
-  toast.style.zIndex='999';
-  document.body.appendChild(toast);
-  setTimeout(()=>toast.remove(),800);
-
-  render();
+function setStance(btn){
+  const group = btn.parentElement.querySelectorAll('button');
+  group.forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
 }
-
-function card(i){
-  return `
-  <div class="card">
-    <h3>${i.title}</h3>
-    <div class="tags">
-      <span class="tag">${i.topic}</span>
-      ${i.neighborhoods.map(n=>`<span class="tag">${n}</span>`).join('')}
-    </div>
-    <div class="meta">${i.when}</div>
-    <p class="summary">${i.summary}</p>
-
-    <div class="why-block">
-      <div class="why-title">Why this matters</div>
-      <ul class="why-points">${i.why.map(p=>`<li>${p}</li>`).join('')}</ul>
-    </div>
-
-    <div class="you-block"><strong>Why this matters to you:</strong> ${i.you}</div>
-
-    <div class="analyst-note">
-      <div class="analyst-header">Civic analyst note <span class="verified">✓ Verified</span></div>
-      ${i.analyst}
-    </div>
-
-    <div class="card-links">
-      <a href="https://seattle.legistar.com/" target="_blank">🔗 Source</a>
-      <a href="#">📄 Full analysis</a>
-    </div>
-
-    <div class="stance">
-      <button class="for ${stances[i.id]==='for'?'active':''}" onclick="setStance(${i.id},'for')">👍 For</button>
-      <button class="against ${stances[i.id]==='against'?'active':''}" onclick="setStance(${i.id},'against')">👎 Against</button>
-      <button class="unsure ${stances[i.id]==='unsure'?'active':''}" onclick="setStance(${i.id},'unsure')">🤔 Not sure</button>
-    </div>
-  </div>`;
-}
-
-function render(){
-  const feed=document.getElementById('feedView');
-  const stanceCards=document.getElementById('stanceCards');
-  const summary=document.getElementById('stanceSummary');
-  const filters=document.getElementById('neighborhoodFilters');
-
-  feed.innerHTML=stanceCards.innerHTML=summary.innerHTML=filters.innerHTML='';
-
-  neighborhoods.forEach(n=>{
-    const b=document.createElement('div');
-    b.className='filter'+(n===activeNeighborhood?' active':'');
-    b.innerText=n;
-    b.onclick=()=>{activeNeighborhood=n;render();};
-    filters.appendChild(b);
-  });
-
-  const counts={};
-  Object.entries(stances).forEach(([id,stance])=>{
-    const item=items.find(i=>i.id==id);
-    if(!item) return;
-    counts[`${item.topic} · ${stance}`]=(counts[`${item.topic} · ${stance}`]||0)+1;
-    stanceCards.innerHTML+=card(item);
-  });
-
-  Object.entries(counts).forEach(([k,v])=>{
-    summary.innerHTML+=`<span class="topic-bubble">${k} · ${v}</span>`;
-  });
-
-  items
-    .filter(i=>activeNeighborhood==='All'||i.neighborhoods.includes(activeNeighborhood))
-    .forEach(i=>feed.innerHTML+=card(i));
-}
-
-render();
 </script>
+
 </body>
 </html>
