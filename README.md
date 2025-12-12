@@ -42,6 +42,7 @@ header {
   border-bottom:1px solid var(--border);
   padding:14px 16px;
   font-weight:700;
+  z-index:10;
 }
 
 /* TABS */
@@ -49,6 +50,11 @@ header {
   display:flex;
   gap:10px;
   margin:12px 0 16px;
+  position:sticky;
+  top:56px;
+  background:var(--bg-body);
+  padding:8px 0;
+  z-index:9;
 }
 
 .tab {
@@ -58,6 +64,7 @@ header {
   background:var(--bg-card);
   font-size:.8rem;
   cursor:pointer;
+  min-height:44px;
 }
 
 .tab.active {
@@ -93,19 +100,22 @@ header {
   border:1px solid var(--border);
   font-size:.75rem;
   cursor:pointer;
+  background:var(--bg-card);
+  min-height:44px;
 }
 
 .filter.active {
   background:var(--primary-soft);
   color:var(--primary);
   border-color:transparent;
+  box-shadow:0 0 0 2px rgba(99,102,241,.15);
 }
 
 /* LAYOUT */
 main {
   max-width:640px;
   margin:auto;
-  padding:14px 14px 80px;
+  padding:14px 14px calc(80px + env(safe-area-inset-bottom));
 }
 
 /* CARD */
@@ -117,7 +127,10 @@ main {
   margin-bottom:16px;
 }
 
-.card h3 { margin:0; font-size:1.05rem; }
+.card h3 {
+  margin:0;
+  font-size:1.05rem;
+}
 
 /* TAGS */
 .tags {
@@ -136,8 +149,16 @@ main {
   font-weight:600;
 }
 
-.meta { font-size:.75rem; color:var(--text-muted); }
-.summary { font-size:.92rem; margin:10px 0; }
+/* META */
+.meta {
+  font-size:.75rem;
+  color:var(--text-muted);
+}
+
+.summary {
+  font-size:.92rem;
+  margin:10px 0;
+}
 
 /* WHY */
 .why-block {
@@ -153,8 +174,15 @@ main {
   color:var(--primary);
 }
 
-.why-points { padding-left:18px; font-size:.85rem; }
-.emphasis { font-weight:600; color:var(--primary); }
+.why-points {
+  padding-left:18px;
+  font-size:.85rem;
+}
+
+.emphasis {
+  font-weight:600;
+  color:var(--primary);
+}
 
 .you-block {
   border-left:3px solid var(--primary);
@@ -181,7 +209,10 @@ main {
   margin-bottom:6px;
 }
 
-.verified { color:#16a34a; font-weight:600; }
+.verified {
+  color:#16a34a;
+  font-weight:600;
+}
 
 /* LINKS */
 .card-links {
@@ -200,7 +231,7 @@ main {
 /* STANCE */
 .stance {
   display:flex;
-  gap:8px;
+  gap:10px;
   margin-top:12px;
 }
 
@@ -212,6 +243,12 @@ main {
   background:var(--bg-card);
   font-size:.75rem;
   cursor:pointer;
+  min-height:44px;
+  transition:transform .08s ease;
+}
+
+.stance button:active {
+  transform:scale(0.97);
 }
 
 .for.active { background:var(--for-bg); border-color:var(--for-border); }
@@ -227,6 +264,14 @@ main {
   font-size:.75rem;
   display:inline-block;
   margin:4px 6px 10px 0;
+}
+
+/* MOBILE DENSITY */
+@media (max-width:480px){
+  .card { padding:16px; }
+  .summary { font-size:.95rem; }
+  .why-points { font-size:.9rem; }
+  .you-block { font-size:.9rem; }
 }
 </style>
 </head>
@@ -266,7 +311,10 @@ const items = [
     title:'Zoning near light rail stations',
     when:'Vote Jan 14',
     summary:'Allows more housing near transit.',
-    why:['<span class="emphasis">Increases</span> housing supply','<span class="emphasis">Reduces</span> parking requirements'],
+    why:[
+      '<span class="emphasis">Increases</span> housing supply',
+      '<span class="emphasis">Reduces</span> parking requirements'
+    ],
     you:'If you rent or live near transit, this may affect availability.',
     analyst:'Applies only within 1/4 mile of stations and does not change height limits.'
   },
@@ -276,7 +324,10 @@ const items = [
     title:'Bus lane expansion downtown',
     when:'Committee Jan 18',
     summary:'Adds dedicated bus lanes.',
-    why:['<span class="emphasis">Improves</span> reliability','<span class="emphasis">Reduces</span> congestion'],
+    why:[
+      '<span class="emphasis">Improves</span> bus reliability',
+      '<span class="emphasis">Reduces</span> congestion'
+    ],
     you:'This may shorten your commute.',
     analyst:'Limited to corridors identified in the transit plan.'
   }
@@ -294,6 +345,22 @@ function switchView(view, el){
 function setStance(id, stance){
   stances[id] = stance;
   localStorage.setItem('polocity_stances', JSON.stringify(stances));
+
+  const toast = document.createElement('div');
+  toast.innerText = 'Saved';
+  toast.style.position='fixed';
+  toast.style.bottom='20px';
+  toast.style.left='50%';
+  toast.style.transform='translateX(-50%)';
+  toast.style.background='#0f172a';
+  toast.style.color='#fff';
+  toast.style.padding='6px 12px';
+  toast.style.borderRadius='999px';
+  toast.style.fontSize='.75rem';
+  toast.style.zIndex='999';
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),800);
+
   render();
 }
 
