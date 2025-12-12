@@ -34,7 +34,6 @@ body {
   color:var(--text-main);
 }
 
-/* HEADER */
 header {
   position:sticky;
   top:0;
@@ -45,7 +44,6 @@ header {
   z-index:10;
 }
 
-/* TABS */
 .tabs {
   display:flex;
   gap:10px;
@@ -76,7 +74,6 @@ header {
 .view { display:none; }
 .view.active { display:block; }
 
-/* FILTERS */
 .filters {
   margin:12px 0 16px;
 }
@@ -111,14 +108,12 @@ header {
   box-shadow:0 0 0 2px rgba(99,102,241,.15);
 }
 
-/* LAYOUT */
 main {
   max-width:640px;
   margin:auto;
   padding:14px 14px calc(80px + env(safe-area-inset-bottom));
 }
 
-/* CARD */
 .card {
   background:var(--bg-card);
   border-radius:var(--radius);
@@ -132,7 +127,6 @@ main {
   font-size:1.05rem;
 }
 
-/* TAGS */
 .tags {
   display:flex;
   gap:6px;
@@ -149,7 +143,6 @@ main {
   font-weight:600;
 }
 
-/* META */
 .meta {
   font-size:.75rem;
   color:var(--text-muted);
@@ -160,7 +153,6 @@ main {
   margin:10px 0;
 }
 
-/* WHY */
 .why-block {
   background:var(--primary-soft);
   border-radius:14px;
@@ -191,7 +183,6 @@ main {
   font-size:.88rem;
 }
 
-/* ANALYST */
 .analyst-note {
   margin-top:12px;
   padding:12px 14px;
@@ -214,7 +205,6 @@ main {
   font-weight:600;
 }
 
-/* LINKS */
 .card-links {
   display:flex;
   justify-content:space-between;
@@ -228,7 +218,6 @@ main {
   font-weight:600;
 }
 
-/* STANCE */
 .stance {
   display:flex;
   gap:10px;
@@ -255,7 +244,6 @@ main {
 .against.active { background:var(--against-bg); border-color:var(--against-border); }
 .unsure.active { background:var(--unsure-bg); border-color:var(--unsure-border); }
 
-/* STANCE SUMMARY */
 .topic-bubble {
   padding:6px 12px;
   border-radius:999px;
@@ -266,7 +254,6 @@ main {
   margin:4px 6px 10px 0;
 }
 
-/* MOBILE DENSITY */
 @media (max-width:480px){
   .card { padding:16px; }
   .summary { font-size:.95rem; }
@@ -306,7 +293,8 @@ let activeNeighborhood = 'All';
 
 const items = [
   {
-    id:1, topic:'housing',
+    id:1,
+    topic:'housing',
     neighborhoods:['Capitol Hill','Downtown'],
     title:'Zoning near light rail stations',
     when:'Vote Jan 14',
@@ -319,7 +307,8 @@ const items = [
     analyst:'Applies only within 1/4 mile of stations and does not change height limits.'
   },
   {
-    id:2, topic:'transit',
+    id:2,
+    topic:'transit',
     neighborhoods:['Downtown','Fremont'],
     title:'Bus lane expansion downtown',
     when:'Committee Jan 18',
@@ -330,6 +319,48 @@ const items = [
     ],
     you:'This may shorten your commute.',
     analyst:'Limited to corridors identified in the transit plan.'
+  },
+  {
+    id:3,
+    topic:'budget',
+    neighborhoods:['All'],
+    title:'Mid-year budget adjustment',
+    when:'Finance Committee Jan 21',
+    summary:'Reallocates funding across departments.',
+    why:[
+      '<span class="emphasis">Shifts</span> funding priorities',
+      '<span class="emphasis">Affects</span> department resources'
+    ],
+    you:'Services you rely on may see changes.',
+    analyst:'No net increase to the city budget; funds are reallocated internally.'
+  },
+  {
+    id:4,
+    topic:'safety',
+    neighborhoods:['Ballard','Rainier Valley'],
+    title:'Neighborhood traffic calming',
+    when:'Vote Jan 23',
+    summary:'Adds speed humps and crosswalks.',
+    why:[
+      '<span class="emphasis">Improves</span> pedestrian safety',
+      '<span class="emphasis">Slows</span> vehicle speeds'
+    ],
+    you:'Walking or biking in these areas may feel safer.',
+    analyst:'Measures target streets with repeated speeding complaints.'
+  },
+  {
+    id:5,
+    topic:'environment',
+    neighborhoods:['Fremont','Capitol Hill'],
+    title:'Urban tree canopy expansion',
+    when:'Committee Jan 25',
+    summary:'Funds new tree planting in dense neighborhoods.',
+    why:[
+      '<span class="emphasis">Reduces</span> urban heat',
+      '<span class="emphasis">Improves</span> air quality'
+    ],
+    you:'More shade and cleaner air in your neighborhood.',
+    analyst:'Focuses on areas with below-average tree coverage.'
   }
 ];
 
