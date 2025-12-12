@@ -40,13 +40,21 @@ header {
   z-index:10;
 }
 
+/* NOTIFICATIONS */
+.notification {
+  background:#f0f9ff;
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;
+  font-size:.8rem;
+}
+
 /* FEED */
 main {
   max-width:620px;
   margin:auto;
 }
 
-/* FEED ITEM */
+/* ITEM */
 .item {
   padding:14px 16px;
   border-bottom:1px solid var(--border);
@@ -56,7 +64,6 @@ main {
   background:#f8fafc;
 }
 
-/* HEADER ROW */
 .item-header {
   display:flex;
   justify-content:space-between;
@@ -72,7 +79,6 @@ main {
 .item-meta {
   font-size:.75rem;
   color:var(--muted);
-  white-space:nowrap;
 }
 
 /* BADGES */
@@ -108,7 +114,7 @@ main {
 /* SUMMARY */
 .item-summary {
   font-size:.9rem;
-  margin:6px 0 8px;
+  margin:6px 0;
 }
 
 /* SENTIMENT */
@@ -137,7 +143,7 @@ main {
 
 .details ul {
   padding-left:18px;
-  margin:0 0 10px;
+  margin:0 0 8px;
   font-size:.85rem;
 }
 
@@ -145,7 +151,7 @@ main {
   font-size:.85rem;
   border-left:3px solid var(--primary);
   padding-left:10px;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 /* ANALYST */
@@ -153,20 +159,14 @@ main {
   font-size:.8rem;
   color:var(--muted);
   border-top:1px solid var(--border);
-  padding-top:8px;
+  padding-top:6px;
 }
 
 /* ACTIONS */
 .actions {
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-top:10px;
-}
-
-.actions-left {
-  display:flex;
-  gap:10px;
+  margin-top:8px;
 }
 
 button {
@@ -182,10 +182,10 @@ button.primary {
   font-weight:600;
 }
 
-/* STANCE BUTTONS */
+/* STANCE */
 .stance {
   display:flex;
-  gap:10px;
+  gap:8px;
   margin-top:8px;
 }
 
@@ -202,150 +202,159 @@ button.primary {
   font-weight:600;
 }
 
-/* SOURCE */
 .source {
   font-size:.75rem;
   color:var(--primary);
   text-decoration:none;
 }
-
-/* MOBILE */
-@media (max-width:480px){
-  .item-summary { font-size:.95rem; }
-}
 </style>
 </head>
 
 <body>
+
 <header>Polocity</header>
 
-<main>
+<div id="notifications"></div>
 
-<!-- ITEM -->
-<div class="item">
-  <div class="item-header">
-    <div class="item-title">Zoning near light rail stations</div>
-    <div class="badge upcoming">Upcoming vote</div>
-  </div>
-
-  <div class="item-meta">Jan 14 · City Council</div>
-
-  <div class="tags">
-    <span class="tag">Housing</span>
-    <span class="tag">Capitol Hill</span>
-    <span class="tag">Downtown</span>
-  </div>
-
-  <div class="item-summary">
-    Allows more housing near light rail stations by reducing parking requirements.
-  </div>
-
-  <div class="sentiment">
-    Community reactions so far: <strong>Mixed</strong>
-  </div>
-
-  <div class="details">
-    <div class="details-title">Why this matters</div>
-    <ul>
-      <li>Increases housing supply near transit</li>
-      <li>Reduces parking minimums</li>
-    </ul>
-
-    <div class="details-title">Why this matters to you</div>
-    <div class="you">
-      If you rent or live near transit, availability and pricing could change.
-    </div>
-
-    <div class="analyst">
-      Civic analyst note · ✓ Verified  
-      <br>
-      Applies only within ¼ mile of stations and does not change height limits.
-    </div>
-
-    <div class="stance">
-      <button onclick="setStance(this)">👍 For</button>
-      <button onclick="setStance(this)">👎 Against</button>
-      <button onclick="setStance(this)">🤔 Not sure</button>
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="actions-left">
-      <button class="primary" onclick="toggleDetails(this)">ℹ️ Details</button>
-    </div>
-    <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
-  </div>
-</div>
-
-<!-- ITEM -->
-<div class="item">
-  <div class="item-header">
-    <div class="item-title">Bus lane expansion downtown</div>
-    <div class="badge committee">In committee</div>
-  </div>
-
-  <div class="item-meta">Jan 18 · Transportation</div>
-
-  <div class="tags">
-    <span class="tag">Transit</span>
-    <span class="tag">Downtown</span>
-  </div>
-
-  <div class="item-summary">
-    Adds dedicated bus lanes downtown to improve reliability.
-  </div>
-
-  <div class="sentiment">
-    Community reactions so far: <strong>Leaning for</strong>
-  </div>
-
-  <div class="details">
-    <div class="details-title">Why this matters</div>
-    <ul>
-      <li>Improves bus reliability</li>
-      <li>Reduces congestion</li>
-    </ul>
-
-    <div class="details-title">Why this matters to you</div>
-    <div class="you">
-      Your commute time may decrease during peak hours.
-    </div>
-
-    <div class="analyst">
-      Civic analyst note · ✓ Verified  
-      <br>
-      Limited to corridors identified in the transit plan.
-    </div>
-
-    <div class="stance">
-      <button onclick="setStance(this)">👍 For</button>
-      <button onclick="setStance(this)">👎 Against</button>
-      <button onclick="setStance(this)">🤔 Not sure</button>
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="actions-left">
-      <button class="primary" onclick="toggleDetails(this)">ℹ️ Details</button>
-    </div>
-    <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
-  </div>
-</div>
-
-</main>
+<main id="feed"></main>
 
 <script>
-function toggleDetails(btn){
-  const item = btn.closest('.item');
-  const details = item.querySelector('.details');
-  details.style.display = details.style.display === 'block' ? 'none' : 'block';
+const items = [
+  {
+    title:"Zoning near light rail stations",
+    badge:"upcoming",
+    meta:"Jan 14 · City Council",
+    tags:["Housing","Capitol Hill","Downtown"],
+    summary:"Allows more housing near light rail stations.",
+    sentiment:"Capitol Hill: Mixed · Downtown: Leaning for",
+    why:["Increases housing supply","Reduces parking requirements"],
+    you:"If you rent or live near transit, availability and pricing may change.",
+    analyst:"Applies only within ¼ mile of stations.",
+    reacted:true
+  },
+  {
+    title:"Bus lane expansion downtown",
+    badge:"committee",
+    meta:"Jan 18 · Transportation",
+    tags:["Transit","Downtown"],
+    summary:"Adds dedicated bus lanes to improve reliability.",
+    sentiment:"Downtown: Leaning for",
+    why:["Improves bus reliability","Reduces congestion"],
+    you:"Your commute time may decrease.",
+    analyst:"Limited to identified corridors.",
+    reacted:true
+  },
+  {
+    title:"Neighborhood traffic calming",
+    badge:"passed",
+    meta:"Jan 23 · City Council",
+    tags:["Safety","Ballard"],
+    summary:"Adds speed humps and crosswalks.",
+    sentiment:"Ballard: Mostly supportive",
+    why:["Improves pedestrian safety","Slows traffic"],
+    you:"Walking and biking may feel safer.",
+    analyst:"Targets streets with speeding complaints.",
+    reacted:true
+  },
+  {
+    title:"Mid-year budget adjustment",
+    badge:"failed",
+    meta:"Jan 21 · Finance",
+    tags:["Budget","Citywide"],
+    summary:"Reallocates funding across departments.",
+    sentiment:"Citywide: Mixed",
+    why:["Shifts service funding","Changes priorities"],
+    you:"Services you use could be affected.",
+    analyst:"No net increase to the budget.",
+    reacted:false
+  },
+  {
+    title:"Urban tree canopy expansion",
+    badge:"passed",
+    meta:"Jan 25 · Environment",
+    tags:["Environment","Fremont"],
+    summary:"Funds new tree planting.",
+    sentiment:"Fremont: Strong support",
+    why:["Reduces heat","Improves air quality"],
+    you:"More shade and cleaner air.",
+    analyst:"Focuses on low-canopy areas.",
+    reacted:true
+  }
+];
+
+function badgeClass(b){
+  return b;
 }
 
-function setStance(btn){
-  const group = btn.parentElement.querySelectorAll('button');
-  group.forEach(b=>b.classList.remove('active'));
+function render(){
+  const feed = document.getElementById('feed');
+  const notifications = document.getElementById('notifications');
+  feed.innerHTML = notifications.innerHTML = '';
+
+  items.forEach(i=>{
+    if(i.reacted && (i.badge === 'passed' || i.badge === 'failed')){
+      notifications.innerHTML += `
+        <div class="notification">
+          🔔 An item you reacted to has an outcome: <strong>${i.title}</strong>
+        </div>`;
+    }
+  });
+
+  items.forEach(i=>{
+    feed.innerHTML += `
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">${i.title}</div>
+          <div class="badge ${badgeClass(i.badge)}">${i.badge}</div>
+        </div>
+
+        <div class="item-meta">${i.meta}</div>
+
+        <div class="tags">${i.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+
+        <div class="item-summary">${i.summary}</div>
+
+        <div class="sentiment">
+          Neighborhood reactions: <strong>${i.sentiment}</strong>
+        </div>
+
+        <div class="details">
+          <div class="details-title">Why this matters</div>
+          <ul>${i.why.map(w=>`<li>${w}</li>`).join('')}</ul>
+
+          <div class="details-title">Why this matters to you</div>
+          <div class="you">${i.you}</div>
+
+          <div class="analyst">
+            Civic analyst note · ✓ Verified<br>${i.analyst}
+          </div>
+
+          <div class="stance">
+            <button onclick="setActive(this)">👍 For</button>
+            <button onclick="setActive(this)">👎 Against</button>
+            <button onclick="setActive(this)">🤔 Not sure</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" onclick="toggleDetails(this)">ℹ️ Details</button>
+          <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
+        </div>
+      </div>`;
+  });
+}
+
+function toggleDetails(btn){
+  const d = btn.closest('.item').querySelector('.details');
+  d.style.display = d.style.display === 'block' ? 'none' : 'block';
+}
+
+function setActive(btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
+
+render();
 </script>
 
 </body>
