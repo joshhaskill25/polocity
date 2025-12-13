@@ -7,17 +7,26 @@
 
 <style>
 :root {
-  --bg:#ffffff;
-  --text:#0f172a;
-  --muted:#64748b;
-  --border:#e5e7eb;
-  --primary:#6366f1;
-  --primary-soft:#eef2ff;
+  --bg:#F9FAFB;
+  --card:#FFFFFF;
+  --text:#111827;
+  --muted:#6B7280;
+  --border:#E5E7EB;
 
-  --badge-upcoming:#fef3c7;
-  --badge-passed:#dcfce7;
-  --badge-failed:#fee2e2;
-  --badge-committee:#e0e7ff;
+  /* Brand */
+  --primary:#6366F1;
+  --primary-soft:#EEF2FF;
+
+  /* Stance colors */
+  --for:#22C55E;        /* green (unchanged) */
+  --against:#F87171;   /* warm coral red */
+  --unsure:#D1BFA7;    /* warm neutral sand */
+
+  /* Outcome badges */
+  --badge-upcoming:#FEF3C7;
+  --badge-passed:#DCFCE7;
+  --badge-failed:#FEE2E2;
+  --badge-committee:#E0E7FF;
 }
 
 * { box-sizing:border-box; }
@@ -33,19 +42,11 @@ body {
 header {
   position:sticky;
   top:0;
-  background:#fff;
+  background:var(--card);
   border-bottom:1px solid var(--border);
-  padding:12px 16px;
-  font-weight:700;
+  padding:14px 16px;
+  font-weight:800;
   z-index:10;
-}
-
-/* NOTIFICATIONS */
-.notification {
-  background:#f0f9ff;
-  border-bottom:1px solid var(--border);
-  padding:10px 16px;
-  font-size:.8rem;
 }
 
 /* FEED */
@@ -56,43 +57,46 @@ main {
 
 /* ITEM */
 .item {
-  padding:14px 16px;
+  padding:16px;
   border-bottom:1px solid var(--border);
+  background:var(--card);
+  transition:transform .15s ease, box-shadow .15s ease;
 }
 
-.item:hover {
-  background:#f8fafc;
+@media (hover:hover) {
+  .item:hover {
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+  }
 }
 
 .item-header {
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
-  gap:10px;
 }
 
 .item-title {
-  font-weight:600;
+  font-weight:700;
   font-size:.95rem;
-}
-
-.item-meta {
-  font-size:.75rem;
-  color:var(--muted);
 }
 
 /* BADGES */
 .badge {
   font-size:.7rem;
-  padding:4px 8px;
+  padding:4px 10px;
   border-radius:999px;
-  font-weight:600;
+  font-weight:700;
 }
 
 .upcoming { background:var(--badge-upcoming); }
 .passed { background:var(--badge-passed); }
 .failed { background:var(--badge-failed); }
 .committee { background:var(--badge-committee); }
+
+.item-meta {
+  font-size:.75rem;
+  color:var(--muted);
+}
 
 /* TAGS */
 .tags {
@@ -104,41 +108,52 @@ main {
 
 .tag {
   font-size:.7rem;
-  padding:2px 8px;
+  padding:3px 10px;
   border-radius:999px;
   background:var(--primary-soft);
   color:var(--primary);
-  font-weight:600;
+  font-weight:700;
 }
 
 /* SUMMARY */
-.item-summary {
-  font-size:.9rem;
+.summary {
+  font-size:.92rem;
   margin:6px 0;
 }
 
 /* SENTIMENT */
 .sentiment {
+  display:inline-block;
   font-size:.75rem;
-  color:var(--muted);
-  margin-bottom:6px;
+  background:rgba(34,197,94,0.12);
+  color:#065F46;
+  padding:6px 10px;
+  border-radius:12px;
+  margin-bottom:8px;
 }
 
 /* DETAILS */
 .details {
-  display:none;
-  margin-top:10px;
-  padding:12px 14px;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transition:max-height .35s ease, opacity .25s ease;
+  margin-top:8px;
   background:var(--primary-soft);
-  border-radius:14px;
+  border-radius:16px;
 }
 
-.details-title {
+.details.open {
+  max-height:600px;
+  opacity:1;
+  padding:14px;
+}
+
+.details h4 {
   font-size:.7rem;
-  font-weight:700;
   text-transform:uppercase;
   color:var(--primary);
-  margin-bottom:6px;
+  margin:8px 0 4px;
 }
 
 .details ul {
@@ -148,9 +163,9 @@ main {
 }
 
 .you {
-  font-size:.85rem;
-  border-left:3px solid var(--primary);
+  border-left:4px solid var(--primary);
   padding-left:10px;
+  font-size:.85rem;
   margin-bottom:8px;
 }
 
@@ -158,7 +173,7 @@ main {
 .analyst {
   font-size:.8rem;
   color:var(--muted);
-  border-top:1px solid var(--border);
+  border-top:1px dashed var(--border);
   padding-top:6px;
 }
 
@@ -166,46 +181,88 @@ main {
 .actions {
   display:flex;
   justify-content:space-between;
-  margin-top:8px;
+  align-items:center;
+  margin-top:10px;
 }
 
 button {
-  background:none;
   border:none;
+  background:none;
   cursor:pointer;
   font-size:.8rem;
-  color:var(--muted);
+  font-weight:700;
 }
 
-button.primary {
+.details-btn {
   color:var(--primary);
-  font-weight:600;
+  background:rgba(99,102,241,0.12);
+  padding:6px 14px;
+  border-radius:999px;
 }
 
 /* STANCE */
 .stance {
   display:flex;
   gap:8px;
-  margin-top:8px;
+  margin-top:10px;
 }
 
 .stance button {
-  padding:6px 12px;
+  padding:6px 14px;
   border-radius:999px;
   border:1px solid var(--border);
-  background:#fff;
+  background:var(--card);
+  transition:transform .1s ease;
 }
 
-.stance button.active {
-  background:var(--primary-soft);
-  color:var(--primary);
-  font-weight:600;
+.stance button:active {
+  transform:scale(.92);
 }
 
+/* Active states */
+.stance button.for.active {
+  background:var(--for);
+  color:white;
+  border-color:transparent;
+}
+
+.stance button.against.active {
+  background:var(--against);
+  color:white;
+  border-color:transparent;
+}
+
+.stance button.unsure.active {
+  background:var(--unsure);
+  color:white;
+  border-color:transparent;
+}
+
+/* SOURCE */
 .source {
   font-size:.75rem;
   color:var(--primary);
   text-decoration:none;
+}
+
+/* TOAST */
+.toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111827;
+  color:white;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:.75rem;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+
+.toast.show {
+  opacity:1;
 }
 </style>
 </head>
@@ -214,9 +271,9 @@ button.primary {
 
 <header>Polocity</header>
 
-<div id="notifications"></div>
-
 <main id="feed"></main>
+
+<div id="toast" class="toast">Saved</div>
 
 <script>
 const items = [
@@ -225,12 +282,11 @@ const items = [
     badge:"upcoming",
     meta:"Jan 14 · City Council",
     tags:["Housing","Capitol Hill","Downtown"],
-    summary:"Allows more housing near light rail stations.",
-    sentiment:"Capitol Hill: Mixed · Downtown: Leaning for",
-    why:["Increases housing supply","Reduces parking requirements"],
-    you:"If you rent or live near transit, availability and pricing may change.",
-    analyst:"Applies only within ¼ mile of stations.",
-    reacted:true
+    summary:"Allows more housing near light rail stations by reducing parking requirements.",
+    sentiment:"Capitol Hill mixed · Downtown leaning for",
+    why:["Increases housing supply","Reduces parking minimums"],
+    you:"If you rent or live near transit, availability and pricing could change.",
+    analyst:"Applies only within ¼ mile of stations."
   },
   {
     title:"Bus lane expansion downtown",
@@ -238,11 +294,10 @@ const items = [
     meta:"Jan 18 · Transportation",
     tags:["Transit","Downtown"],
     summary:"Adds dedicated bus lanes to improve reliability.",
-    sentiment:"Downtown: Leaning for",
+    sentiment:"Downtown leaning for",
     why:["Improves bus reliability","Reduces congestion"],
-    you:"Your commute time may decrease.",
-    analyst:"Limited to identified corridors.",
-    reacted:true
+    you:"Commute times may decrease.",
+    analyst:"Limited to identified corridors."
   },
   {
     title:"Neighborhood traffic calming",
@@ -250,11 +305,10 @@ const items = [
     meta:"Jan 23 · City Council",
     tags:["Safety","Ballard"],
     summary:"Adds speed humps and crosswalks.",
-    sentiment:"Ballard: Mostly supportive",
+    sentiment:"Ballard mostly supportive",
     why:["Improves pedestrian safety","Slows traffic"],
     you:"Walking and biking may feel safer.",
-    analyst:"Targets streets with speeding complaints.",
-    reacted:true
+    analyst:"Targets streets with repeated speeding complaints."
   },
   {
     title:"Mid-year budget adjustment",
@@ -262,99 +316,73 @@ const items = [
     meta:"Jan 21 · Finance",
     tags:["Budget","Citywide"],
     summary:"Reallocates funding across departments.",
-    sentiment:"Citywide: Mixed",
-    why:["Shifts service funding","Changes priorities"],
-    you:"Services you use could be affected.",
-    analyst:"No net increase to the budget.",
-    reacted:false
+    sentiment:"Citywide mixed",
+    why:["Shifts funding priorities","Impacts services"],
+    you:"Some services you rely on could change.",
+    analyst:"No net increase to total budget."
   },
   {
     title:"Urban tree canopy expansion",
     badge:"passed",
     meta:"Jan 25 · Environment",
     tags:["Environment","Fremont"],
-    summary:"Funds new tree planting.",
-    sentiment:"Fremont: Strong support",
-    why:["Reduces heat","Improves air quality"],
-    you:"More shade and cleaner air.",
-    analyst:"Focuses on low-canopy areas.",
-    reacted:true
+    summary:"Funds new tree planting in dense areas.",
+    sentiment:"Fremont strong support",
+    why:["Reduces urban heat","Improves air quality"],
+    you:"More shade and cleaner air locally.",
+    analyst:"Focuses on low-canopy neighborhoods."
   }
 ];
 
-function badgeClass(b){
-  return b;
-}
+const feed = document.getElementById('feed');
+const toast = document.getElementById('toast');
 
-function render(){
-  const feed = document.getElementById('feed');
-  const notifications = document.getElementById('notifications');
-  feed.innerHTML = notifications.innerHTML = '';
+items.forEach(i=>{
+  feed.innerHTML += `
+  <div class="item">
+    <div class="item-header">
+      <div class="item-title">${i.title}</div>
+      <div class="badge ${i.badge}">${i.badge}</div>
+    </div>
+    <div class="item-meta">${i.meta}</div>
+    <div class="tags">${i.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    <div class="summary">${i.summary}</div>
+    <div class="sentiment">Neighborhood reactions: ${i.sentiment}</div>
 
-  items.forEach(i=>{
-    if(i.reacted && (i.badge === 'passed' || i.badge === 'failed')){
-      notifications.innerHTML += `
-        <div class="notification">
-          🔔 An item you reacted to has an outcome: <strong>${i.title}</strong>
-        </div>`;
-    }
-  });
+    <div class="details">
+      <h4>Why this matters</h4>
+      <ul>${i.why.map(w=>`<li>${w}</li>`).join('')}</ul>
 
-  items.forEach(i=>{
-    feed.innerHTML += `
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">${i.title}</div>
-          <div class="badge ${badgeClass(i.badge)}">${i.badge}</div>
-        </div>
+      <h4>Why this matters to you</h4>
+      <div class="you">${i.you}</div>
 
-        <div class="item-meta">${i.meta}</div>
+      <div class="analyst">Civic analyst note · ✓ Verified<br>${i.analyst}</div>
 
-        <div class="tags">${i.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="stance">
+        <button class="for" onclick="setStance(this)">👍 For</button>
+        <button class="against" onclick="setStance(this)">👎 Against</button>
+        <button class="unsure" onclick="setStance(this)">🤔 Not sure</button>
+      </div>
+    </div>
 
-        <div class="item-summary">${i.summary}</div>
-
-        <div class="sentiment">
-          Neighborhood reactions: <strong>${i.sentiment}</strong>
-        </div>
-
-        <div class="details">
-          <div class="details-title">Why this matters</div>
-          <ul>${i.why.map(w=>`<li>${w}</li>`).join('')}</ul>
-
-          <div class="details-title">Why this matters to you</div>
-          <div class="you">${i.you}</div>
-
-          <div class="analyst">
-            Civic analyst note · ✓ Verified<br>${i.analyst}
-          </div>
-
-          <div class="stance">
-            <button onclick="setActive(this)">👍 For</button>
-            <button onclick="setActive(this)">👎 Against</button>
-            <button onclick="setActive(this)">🤔 Not sure</button>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button class="primary" onclick="toggleDetails(this)">ℹ️ Details</button>
-          <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
-        </div>
-      </div>`;
-  });
-}
+    <div class="actions">
+      <button class="details-btn" onclick="toggleDetails(this)">ℹ️ Details</button>
+      <a class="source" href="https://seattle.legistar.com/" target="_blank">Source</a>
+    </div>
+  </div>`;
+});
 
 function toggleDetails(btn){
   const d = btn.closest('.item').querySelector('.details');
-  d.style.display = d.style.display === 'block' ? 'none' : 'block';
+  d.classList.toggle('open');
 }
 
-function setActive(btn){
+function setStance(btn){
   btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),900);
 }
-
-render();
 </script>
 
 </body>
